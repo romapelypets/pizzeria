@@ -1,0 +1,73 @@
+﻿@model Pizzeria.WebUI.ViewModels.ShoppingCartViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+@section scripts {
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".RemoveLink").click(function (e) {
+            e.preventDefault();
+
+            var recordToDelete = $(this).attr("data-id");
+
+            if (recordToDelete != '') {
+                $.post("/ShoppingCart/RemoveFromCart", { "id": recordToDelete },
+                    function (data) {
+                        if (data.ItemCount == 0) {
+                            $('#row-' + data.DeleteId).fadeOut('slow');
+                        } else {
+                            $('#item-count-' + data.DeleteId).text(data.ItemCount);
+                        }
+                        $('#cart-total').text(data.CartTotal);
+                        $('#update-message').text(data.Message);
+                        $('#cart-status').text('Cart(' + data.CartCount + ')');
+                    });
+            }
+        });
+    });
+</script>
+}
+<div id="update-message" class="text-info">
+
+</div>
+@if (Model.CartItems.Count == 0)
+{
+    <a class="btn-danger" href="~/Home/Index">Your shopping cart is empty, continue shopping </a>
+}
+else
+{
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.CartItems)
+        {
+            <tr id="row-@item.PizzaId">
+                <td>@item.Pizza.Name</td>
+                <td>@item.Pizza.Price</td>
+                <td id="item-count-@item.PizzaId">@item.Count</td>
+                <td>@((item.Pizza.Price*item.Count))</td>
+                <td><a href="" class="RemoveLink" data-id="@item.PizzaId">Remove from cart</a></td>
+            </tr>
+        }
+        <tr>
+            <td>Total</td>
+            <td></td>
+            <td></td>
+            <td id="cart-total" class="text-success"><b>@Model.CartTotal</b></td>
+        </tr>
+    </table>
+    
+    <p class="button">
+        @Html.ActionLink("Continue shopping", "Index","Home")
+    </p>
+    <p class="button">
+        @Html.ActionLink("Checkout","AddressAndPayment","Checkout")
+    </p>
+}

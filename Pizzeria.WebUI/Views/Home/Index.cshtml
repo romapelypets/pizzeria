@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Pizzeria.DAL.Models.Pizza>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create Own", "Toppings","ShoppingCart")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PizzaMakerId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PizzaMaker.Surname)
+        </td>
+        <td>
+            @{var context = new Pizzeria.DAL.Data.DataContext();}
+            @{ var products = context.ProductsToPizzas
+                        .Where(modelItem => modelItem.PizzaId == @item.Id)
+                        .Select(modelItem => modelItem.Product)
+                        .ToList();
+              }
+            @foreach (var p in products) { @p.Name }
+        </td>
+        <td>@Html.ActionLink("Add to Cart","AddToCart","ShoppingCart",new { id = item.Id }, new {@class = "btn btn-ifo"})</td>
+    </tr>
+}
+
+</table>

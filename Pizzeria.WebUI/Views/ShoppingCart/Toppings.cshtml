@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Pizzeria.DAL.Models.Product>
+
+@{
+    ViewBag.Title = "Toppings";
+}
+
+@section scripts {
+>
+}
+<h2>Toppings</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
+            @Html.ActionLink("Add to Pizza", "AddCustomToppping", "ShoppingCart", new { productId = @item.Id }, new { @class = "Add" })
+        </td>
+    </tr>
+}
+
+    @Html.ActionLink("Add to Cart", "AddToCart", "ShoppingCart", new { id = 2 }, new { @class = "btn btn-ifo" })
+
+</table>
+
+@TempData["Price"] 
+@TempData["Time"]
+@*@if (TempData["Products"] != null)
+{
+foreach (var p in TempData["Products"] as List<string>)
+{
+    @p;
+}}*@
