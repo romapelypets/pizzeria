@@ -22,6 +22,7 @@ namespace Pizzeria.WebUI.Controllers
             List<Pizza> list = context.Pizzas
                 .OrderByDescending(item => item.Id)
                 .ToList();
+            
             if (list.Count != 0) { return View(list); }
             else return View();
         }

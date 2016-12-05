@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+
 }
 
 <h2>Index</h2>
@@ -49,7 +50,12 @@
               }
             @foreach (var p in products) { @p.Name }
         </td>
-        <td>@Html.ActionLink("Add to Cart","AddToCart","ShoppingCart",new { id = item.Id }, new {@class = "btn btn-ifo"})</td>
+        <td>
+          
+           
+                 @Html.ActionLink("Add to Cart", "AddToCart", "ShoppingCart", new { id = item.Id }, new { @class = "btn btn-ifo" })
+         
+        </td>
     </tr>
 }
 

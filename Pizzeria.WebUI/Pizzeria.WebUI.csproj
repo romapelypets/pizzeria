@@ -187,6 +187,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PizzaMakerController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -238,6 +239,10 @@
     <Content Include="Views\ShoppingCart\CartSummary.cshtml" />
     <Content Include="Views\Checkout\AddressAndPayment.cshtml" />
     <Content Include="Views\ShoppingCart\Toppings.cshtml" />
+    <Content Include="Views\PizzaMaker\Index.cshtml" />
+    <Content Include="Views\PizzaMaker\Create.cshtml" />
+    <Content Include="Views\PizzaMaker\Edit.cshtml" />
+    <Content Include="Views\PizzaMaker\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

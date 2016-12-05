@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Web.Mvc;
 using Pizzeria.DAL.Data;
 using Pizzeria.DAL.Models;
+using Pizzeria.WebUI.Controllers;
 
 namespace Pizzeria.WebUI.Model
 {
@@ -31,11 +32,12 @@ namespace Pizzeria.WebUI.Model
             var cartItem = db.Carts.SingleOrDefault(item => item.CartId == ShoppingCartId && item.PizzaId == pizza.Id);
 
             var product = db.Products.Where(item => item.Pizzas.Any(r => r.PizzaId == pizza.Id)).ToList();
-
+          
             foreach (var p in product)
             {
                 p.Count--;
             }
+
             if (cartItem == null)
             {
                 cartItem = new Cart
@@ -129,6 +131,7 @@ namespace Pizzeria.WebUI.Model
             }
 
             db.SaveChanges();
+            EmptyCart();
             return order.Id;
         }
 

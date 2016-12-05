@@ -2,7 +2,8 @@ using System.Web.Mvc;
 using Microsoft.Practices.Unity;
 using Unity.Mvc5;
 using Pizzeria.DAL.Data;
-
+using Pizzeria.DAL.Repository;
+using Pizzeria.DAL.Models;
 namespace Pizzeria.WebUI
 {
     public static class UnityConfig
@@ -16,7 +17,7 @@ namespace Pizzeria.WebUI
 
             // e.g. container.RegisterType<ITestService, TestService>();
             container.RegisterInstance<DataContext>(new DataContext());
-
+            container.RegisterInstance<IUnitOfWork>(new UnitOfWork(new DataContext()));
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

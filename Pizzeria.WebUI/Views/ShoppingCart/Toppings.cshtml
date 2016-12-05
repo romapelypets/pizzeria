@@ -4,9 +4,16 @@
     ViewBag.Title = "Toppings";
 }
 
-@section scripts {
->
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.Add').click(function () {
+                location.reload();
+            });
+        });
+    </script>
 }
+
 <h2>Toppings</h2>
 <table class="table">
     <tr>
@@ -43,8 +50,10 @@
 
 </table>
 
-@TempData["Price"] 
-@TempData["Time"]
+ @{ var p = @TempData["Price"]; }
+<p>Price: @TempData["Price"]</p>
+
+
 @*@if (TempData["Products"] != null)
 {
 foreach (var p in TempData["Products"] as List<string>)

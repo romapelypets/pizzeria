@@ -15,6 +15,7 @@ namespace Pizzeria.WebUI.Controllers
         // GET: ShoppingCart
 
         private readonly DataContext context;
+  
         public ShoppingCartController(DataContext context)
         {
             this.context = context;
@@ -35,7 +36,9 @@ namespace Pizzeria.WebUI.Controllers
         public ActionResult AddToCart(int id)
         {
             var addedPizza = context.Pizzas.Single(item => item.Id == id);
-
+          
+   
+ 
             var cart = ShoppingCart.GetCart(this.HttpContext);
             cart.AddToCart(addedPizza);
             return RedirectToAction("Index");
@@ -48,32 +51,20 @@ namespace Pizzeria.WebUI.Controllers
             return View(toppings); 
         }
 
-    
+
         public ActionResult AddCustomToppping(int productId)
         {
 
             Pizza pizza = context.Pizzas.Where(item => item.Id == 2).FirstOrDefault();
 
             Product product = context.Products.Where(item => item.Id == productId).FirstOrDefault();
-            List<Product> listProducts = new List<Product>();
-            listProducts.Add(product);
+            pizza.Price += product.Price ;
 
-            decimal price = 0;
-            TimeSpan time = TimeSpan.Zero ;
-            foreach(var p in listProducts)
-            {
-                price += p.Price;
-                time += p.Time;
-            }
-
-            TempData["Price"] = price ;
-            TempData["Time"] = time ;
-           
+            TempData["Price"] = pizza.Price;
             //TempData["Products"] = listProducts;
-         
+            
 
             context.SaveChanges();
-
             return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
 
 
