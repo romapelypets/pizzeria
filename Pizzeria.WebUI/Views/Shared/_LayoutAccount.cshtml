@@ -25,7 +25,7 @@
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>@{ Html.RenderAction("CartSummary", "ShoppingCart"); }</li>
+                    <li>@Html.Partial("_LoginPartial")</li>
                 </ul>
             </div>
         </div>

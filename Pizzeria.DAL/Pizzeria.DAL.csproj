@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\DataContext.cs" />
+    <Compile Include="Mapping\AdminMapping.cs" />
     <Compile Include="Mapping\CartMapping.cs" />
     <Compile Include="Mapping\OrderMapping.cs" />
     <Compile Include="Mapping\PizzaMakerMapping.cs" />
@@ -78,7 +79,12 @@
     <Compile Include="Migrations\201611270041237_AddFieldToOrder.Designer.cs">
       <DependentUpon>201611270041237_AddFieldToOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612132037570_AddAdin.cs" />
+    <Compile Include="Migrations\201612132037570_AddAdin.Designer.cs">
+      <DependentUpon>201612132037570_AddAdin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Pizza.cs" />
@@ -111,6 +117,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611270041237_AddFieldToOrder.resx">
       <DependentUpon>201611270041237_AddFieldToOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612132037570_AddAdin.resx">
+      <DependentUpon>201612132037570_AddAdin.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

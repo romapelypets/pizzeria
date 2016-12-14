@@ -3,6 +3,7 @@ using Microsoft.Practices.Unity;
 using Unity.Mvc5;
 using Pizzeria.DAL.Data;
 using Pizzeria.DAL.Repository;
+using Pizzeria.WebUI.Helpers;
 using Pizzeria.DAL.Models;
 namespace Pizzeria.WebUI
 {
@@ -18,6 +19,7 @@ namespace Pizzeria.WebUI
             // e.g. container.RegisterType<ITestService, TestService>();
             container.RegisterInstance<DataContext>(new DataContext());
             container.RegisterInstance<IUnitOfWork>(new UnitOfWork(new DataContext()));
+            container.RegisterInstance<IAuth>(new FormAuth());
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

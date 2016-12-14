@@ -1,0 +1,75 @@
+﻿@model Pizzeria.DAL.Models.Admin
+
+@{
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <div class="container">
+        <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">Log In</div>
+                </div>
+
+                <div style="padding-top:30px" class="panel-body">
+
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = Request.QueryString["ReturnUrl"] }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+
+                        if (@TempData.ContainsKey("StatusMessage"))
+                        {
+                            <h4 style="white-space: pre-line"> @TempData["StatusMessage"]</h4>
+                            TempData.Remove("StatusMessage");
+                        }
+                        else
+                        {
+                            TempData.Remove("StatusMessage");
+                        }
+
+
+                        @Html.ValidationSummary(true)
+                        <div class="cols-sm-10">
+                            <div style="margin-bottom: 25px" class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "username" })
+                                @Html.ValidationMessageFor(m => m.UserName)
+                            </div>
+                        </div>
+
+
+
+                        <div style="margin-bottom: 25px" class="input-group">
+
+                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "password" })
+                            @Html.ValidationMessageFor(m => m.Password)
+
+                        </div>
+
+
+                        <div style="margin-top:10px" class="form-group">
+
+                            <div class="col-sm-12 controls">
+                                <input type="submit" value="Log in" class="btn btn-success" id="btn-login" />
+                            </div>
+                        </div>
+                        <hr />
+                       
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

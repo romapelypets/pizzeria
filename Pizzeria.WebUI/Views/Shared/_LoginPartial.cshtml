@@ -1,0 +1,18 @@
+﻿@using Pizzeria.DAL.Data
+
+@if (HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    @Html.AntiForgeryToken()
+    <ul class="nav navbar-nav navbar-right">
+        <li class="navbar-text">Hello, @User.Identity.Name</li>
+        <li>@Html.ActionLink("Sign Out", "Logout", "Account")</li>
+
+    </ul>
+
+}
+else
+{
+    
+}
+
+

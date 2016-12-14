@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+
+<br />
+
+<input type="button" id="btnProduct" value="Product" class="btn btn-info" /> <br /> <hr />
+
+<input type="button" id="btnPizzaMaker" value="PizzaMaker" class="btn btn-info" /> <br /> <hr />
+
+<input type="button" id="btnPizza" value="Pizza" class="btn btn-info" />
+
+@section styles {
+    <style>
+        #btnPizza, #btnPizzaMaker, #btnProduct {
+            width:200px;
+            text-align:center;
+            
+        }
+    </style>
+    }
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $("#btnProduct").click(function () {
+                window.location.href = "@Url.Action("Index","Product")";
+            })
+        })
+
+        $(function () {
+            $("#btnPizza").click(function () {
+                window.location.href = "@Url.Action("Index","Pizza")";
+            })
+        })
+        $(function () {
+            $("#btnPizzaMaker").click(function () {
+                window.location.href = "@Url.Action("Index","PizzaMaker")";
+            })
+        })
+    </script>
+}

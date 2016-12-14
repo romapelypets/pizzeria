@@ -22,6 +22,7 @@ namespace Pizzeria.DAL.Data
         public DbSet<PizzaToOrder> PizzasToOrder { get; set; }
         public DbSet<Cart> Carts { get; set; }
 
+        public DbSet<Admin> Admins { get; set; }
 
         public DataContext()
             :base("Pizzeria")
