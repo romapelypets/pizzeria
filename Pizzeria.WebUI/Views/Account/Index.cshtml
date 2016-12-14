@@ -11,11 +11,14 @@
 
 <input type="button" id="btnPizzaMaker" value="PizzaMaker" class="btn btn-info" /> <br /> <hr />
 
-<input type="button" id="btnPizza" value="Pizza" class="btn btn-info" />
+<input type="button" id="btnPizza" value="Pizza" class="btn btn-info" />  <br /> <hr />
+
+<input type="button" id="btnPopular" value="Popularity of pizzas" class="btn btn-success"/>
+
 
 @section styles {
     <style>
-        #btnPizza, #btnPizzaMaker, #btnProduct {
+        #btnPizza, #btnPizzaMaker, #btnProduct, #btnPopular {
             width:200px;
             text-align:center;
             
@@ -40,6 +43,12 @@
         $(function () {
             $("#btnPizzaMaker").click(function () {
                 window.location.href = "@Url.Action("Index","PizzaMaker")";
+            })
+        })
+
+        $(function () {
+            $("#btnPopular").click(function () {
+                window.location.href = "@Url.Action("Popular","Account")";
             })
         })
     </script>
