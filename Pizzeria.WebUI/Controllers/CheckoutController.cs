@@ -7,6 +7,9 @@ using Pizzeria.DAL.Models;
 using Pizzeria.DAL.Data;
 using Pizzeria.WebUI.Model;
 using Pizzeria.WebUI.ViewModels;
+using Pizzeria.WebUI.Services;
+using Pizzeria.WebUI.Services.Impl;
+using Pizzeria.WebUI.Services.ServiceImpl;
 
 namespace Pizzeria.WebUI.Controllers
 {
@@ -16,9 +19,13 @@ namespace Pizzeria.WebUI.Controllers
 
         private readonly DataContext context;
 
+        private Facade facade;
+
         public CheckoutController(DataContext context)
         {
             this.context = context;
+
+            this.facade = new Facade(new OrderProcessingService(), new PaymentService(), new CartProcessingService());
         }
 
         public ActionResult Index()
@@ -37,13 +44,8 @@ namespace Pizzeria.WebUI.Controllers
             var order = new Order();
             TryUpdateModel(order);
 
-            order.OrderTime = DateTime.Now;
-            context.Orders.Add(order);
-            context.SaveChanges();
+            facade.createOrder(context, this.HttpContext, order);
 
-            var cart = ShoppingCart.GetCart(this.HttpContext);
-            cart.CreateOrder(order);
-            context.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
     }

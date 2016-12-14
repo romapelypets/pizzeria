@@ -7,40 +7,35 @@ using Pizzeria.DAL.Models;
 using Pizzeria.DAL.Data;
 using Pizzeria.WebUI.Model;
 using Pizzeria.WebUI.ViewModels;
+using Pizzeria.WebUI.Services;
+using Pizzeria.WebUI.Services.ServiceImpl;
+using Pizzeria.WebUI.Services.Impl;
 
 namespace Pizzeria.WebUI.Controllers
 {
     public class ShoppingCartController : Controller
     {
-        // GET: ShoppingCart
 
         private readonly DataContext context;
-  
+
+        private Facade facade;
+
         public ShoppingCartController(DataContext context)
         {
             this.context = context;
+
+            this.facade = new Facade(new OrderProcessingService(), new PaymentService(), new CartProcessingService());
         }
 
         public ActionResult Index()
-        {
-            var cart = ShoppingCart.GetCart(this.HttpContext);
-            var viewModel = new ShoppingCartViewModel
-            {
-                CartItems = cart.GetCartItems(),
-                CartTotal = cart.GetTotal()
-            };
-        
-            return View(viewModel);
+        {      
+            return View(facade.createShoppingCartViewModel(this.HttpContext));
         }
 
         public ActionResult AddToCart(int id)
         {
-            var addedPizza = context.Pizzas.Single(item => item.Id == id);
-          
-   
+            facade.addPizzaToCart(context, this.HttpContext, id);
  
-            var cart = ShoppingCart.GetCart(this.HttpContext);
-            cart.AddToCart(addedPizza);
             return RedirectToAction("Index");
         }
 
@@ -54,45 +49,26 @@ namespace Pizzeria.WebUI.Controllers
 
         public ActionResult AddCustomToppping(int productId)
         {
-
             Pizza pizza = context.Pizzas.Where(item => item.Id == 2).FirstOrDefault();
 
             Product product = context.Products.Where(item => item.Id == productId).FirstOrDefault();
             pizza.Price += product.Price ;
 
             TempData["Price"] = pizza.Price;
-            //TempData["Products"] = listProducts;
             
-
             context.SaveChanges();
             return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
-
-
         }
 
         [HttpPost]
         public ActionResult RemoveFromCart(int id)
         {
-            var cart = ShoppingCart.GetCart(this.HttpContext);
-
-            string pizzaName = context.Carts.FirstOrDefault(item => item.PizzaId == id).Pizza.Name;
-            int itemCount = cart.RemoveFromCart(id);
-            var results = new ShoppingCartRemoveViewModel
-            {
-                Message = Server.HtmlEncode(pizzaName) + " has been removed from your shopping cart",
-                CartTotal = cart.GetTotal(),
-                CartCount = cart.GetCount(),
-                ItemCount = itemCount,
-                DeleteId = id
-            };
-
-            return Json(results);
+            return Json(facade.removePizzaFromCart(context, this.HttpContext, Server, id));
         }
 
         public ActionResult CartSummary()
         {
-            var cart = ShoppingCart.GetCart(this.HttpContext);
-            ViewData["CartCount"] = cart.GetCount();
+            ViewData["CartCount"] = facade.getCartCount(this.HttpContext);
             return PartialView("CartSummary");
         }
     }
