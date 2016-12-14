@@ -3,7 +3,6 @@
     ViewBag.Title = "AddressAndPayment";
 }
 
-<h2>AddressAndPayment</h2>
 @using (Html.BeginForm(new { @class = "form-horizontal" }))
 {
    <fieldset>
@@ -33,8 +32,25 @@
                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @type = "text", @placeholder = "Email" } })
            </div>
        </div>
+
+       <div class="form-group">
+           <input type="submit" value="submitOrder" class="Update btn btn-warning" />
+       </div>
    </fieldset>
 
-   <input type="submit" value="submitOrder" />
+  
 }
+@section scripts {
+    <script>
+        $(function () {
+            $('.Update').click(function () {
+                $.ajax({
+                    url: '/Checkout/UpdatePrice',
+                    type: 'Post',
+                    data: { id: 2, price: 50 },
+                    dataType: 'json'
+                });
+            });
+        });
+    </script>}
 

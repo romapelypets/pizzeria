@@ -199,6 +199,10 @@
     <Compile Include="Helpers\IAuth.cs" />
     <Compile Include="Model\ShoppingCart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Decorator\AbstractPizza.cs" />
+    <Compile Include="Services\Decorator\ClassicPizza.cs" />
+    <Compile Include="Services\Decorator\PizzaDecorator.cs" />
+    <Compile Include="Services\Decorator\ProductPizza.cs" />
     <Compile Include="Services\Facade.cs" />
     <Compile Include="Services\ICartProcessingService.cs" />
     <Compile Include="Services\Impl\CartProcessingService.cs" />
@@ -221,6 +225,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\1.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">

@@ -5,58 +5,124 @@
 
 }
 
-<h2>Index</h2>
+@*<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create Own", "Toppings","ShoppingCart")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Time)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PizzaMakerId)
-        </th>
-        <th></th>
-    </tr>
+    <p>
+        @Html.ActionLink("Create Own", "Toppings","ShoppingCart")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PizzaMakerId)
+            </th>
+            <th></th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Time)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PizzaMaker.Surname)
-        </td>
-        <td>
-            @{var context = new Pizzeria.DAL.Data.DataContext();}
-            @{ var products = context.ProductsToPizzas
-                        .Where(modelItem => modelItem.PizzaId == @item.Id)
-                        .Select(modelItem => modelItem.Product)
-                        .ToList();
-              }
-            @foreach (var p in products) { @p.Name }
-        </td>
-        <td>
-          
-           
-                 @Html.ActionLink("Add to Cart", "AddToCart", "ShoppingCart", new { id = item.Id }, new { @class = "btn btn-ifo" })
-         
-        </td>
-    </tr>
-}
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PizzaMaker.Surname)
+            </td>
+            <td>
+                @{var context = new Pizzeria.DAL.Data.DataContext();}
+                @{ var products = context.ProductsToPizzas
+                            .Where(modelItem => modelItem.PizzaId == @item.Id)
+                            .Select(modelItem => modelItem.Product)
+                            .ToList();
+                  }
+                @foreach (var p in products) { @p.Name }
+            </td>
+            <td>
 
-</table>
+
+                     @Html.ActionLink("Add to Cart", "AddToCart", "ShoppingCart", new { id = item.Id }, new { @class = "btn btn-ifo" })
+
+            </td>
+        </tr>
+    }
+
+    </table>*@
+
+
+<div class="container">
+    
+    <button type="button" class="btn btn-danger" onclick="location.href = '@Url.Action("Toppings", "ShoppingCart")'">CREATE YOUT OWN</button> <br />
+    <div class="row">
+        @foreach(var item in @Model)
+        {
+            <div class="col-md-3 col-sm-6">
+                <span class="thumbnail">
+                    <img src= "@Url.Content("~/Images/1.jpg")" alt="photo" />
+                    <h4>@item.Name</h4>
+                    <div class="ratings">
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                    </div>
+                    <hr class="line" />
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <p class="price">@item.Price</p>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            @Html.ActionLink("Add to Cart", "AddToCart", "ShoppingCart", new { id = item.Id }, new { @class = "btn btn-success right" })
+                        </div>
+                    </div>
+                </span>
+            </div>
+        }
+     </div>
+</div>
+
+@section styles{
+    <style>
+    h4{
+    	font-weight: 600;
+	}
+	p{
+		font-size: 12px;
+		margin-top: 5px;
+	}
+	.price{
+		font-size: 30px;
+    	margin: 0 auto;
+    	color: #333;
+	}
+	.right{
+		float:right;
+		border-bottom: 2px solid #4B8E4B;
+	}
+	.thumbnail{
+		opacity:0.70;
+		-webkit-transition: all 0.5s; 
+		transition: all 0.5s;
+	}
+	.thumbnail:hover{
+		opacity:1.00;
+		box-shadow: 0px 0px 10px #4bc6ff;
+	}
+	.line{
+		margin-bottom: 5px;
+	}
+    </style>
+    }

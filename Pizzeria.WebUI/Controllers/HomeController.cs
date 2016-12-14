@@ -23,7 +23,9 @@ namespace Pizzeria.WebUI.Controllers
             List<Pizza> list = context.Pizzas
                 .OrderByDescending(item => item.Id)
                 .ToList();
-            
+            Pizza pizza = context.Pizzas.Where(item => item.Id == 2).FirstOrDefault();
+            list.Remove(pizza);
+
             if (list.Count != 0) { return View(list); }
             else return View();
         }

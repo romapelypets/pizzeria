@@ -4,29 +4,29 @@
 }
 
 @section scripts {
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(".RemoveLink").click(function (e) {
-            e.preventDefault();
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".RemoveLink").click(function (e) {
+                e.preventDefault();
 
-            var recordToDelete = $(this).attr("data-id");
+                var recordToDelete = $(this).attr("data-id");
 
-            if (recordToDelete != '') {
-                $.post("/ShoppingCart/RemoveFromCart", { "id": recordToDelete },
-                    function (data) {
-                        if (data.ItemCount == 0) {
-                            $('#row-' + data.DeleteId).fadeOut('slow');
-                        } else {
-                            $('#item-count-' + data.DeleteId).text(data.ItemCount);
-                        }
-                        $('#cart-total').text(data.CartTotal);
-                        $('#update-message').text(data.Message);
-                        $('#cart-status').text('Cart(' + data.CartCount + ')');
-                    });
-            }
+                if (recordToDelete != '') {
+                    $.post("/ShoppingCart/RemoveFromCart", { "id": recordToDelete },
+                        function (data) {
+                            if (data.ItemCount == 0) {
+                                $('#row-' + data.DeleteId).fadeOut('slow');
+                            } else {
+                                $('#item-count-' + data.DeleteId).text(data.ItemCount);
+                            }
+                            $('#cart-total').text(data.CartTotal);
+                            $('#update-message').text(data.Message);
+                            $('#cart-status').text('Cart(' + data.CartCount + ')');
+                        });
+                }
+            });
         });
-    });
-</script>
+    </script>
 }
 <div id="update-message" class="text-info">
 
@@ -37,37 +37,53 @@
 }
 else
 {
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-            <th></th>
-        </tr>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-10 col-md-offset-1">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        @foreach (var item in Model.CartItems)
+                        {
+                            <tbody>
+                            <tr id="row-@item.PizzaId">
+                                <td class="col-sm-8 col-md-6">@item.Pizza.Name</td>
 
-        @foreach (var item in Model.CartItems)
-        {
-            <tr id="row-@item.PizzaId">
-                <td>@item.Pizza.Name</td>
-                <td>@item.Pizza.Price</td>
-                <td id="item-count-@item.PizzaId">@item.Count</td>
-                <td>@((item.Pizza.Price*item.Count))</td>
-                <td><a href="" class="RemoveLink" data-id="@item.PizzaId">Remove from cart</a></td>
-            </tr>
-        }
-        <tr>
-            <td>Total</td>
-            <td></td>
-            <td></td>
-            <td id="cart-total" class="text-success"><b>@Model.CartTotal</b></td>
-        </tr>
-    </table>
-    
-    <p class="button">
-        @Html.ActionLink("Continue shopping", "Index","Home")
-    </p>
-    <p class="button">
-        @Html.ActionLink("Checkout","AddressAndPayment","Checkout")
-    </p>
+                                <td class="col-sm-1 col-md-1 text-center"><strong>@item.Pizza.Price</strong></td>
+                                <td id="item-count-@item.PizzaId" class="col-sm-1 col-md-1 text-center"><strong>@item.Count</strong></td>
+                                <td class="col-sm-1 col-md-1 text-center"><strong>@((item.Pizza.Price * item.Count))</strong></td>
+                                <td class="col-sm-1 col-md-1 text-center"><a href="" class="btn btn-danger RemoveLink" data-id="@item.PizzaId"><span class="glyphicon glyphicon-remove"></span>Remove</a></td>
+                            </tr>
+                            </tbody>
+                        }
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            
+                            <td><h3>Total</h3></td>
+                            <td id="cart-total" class="text-success text-right"><h3>@Model.CartTotal</h3></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index","Home")'">Continue</button>
+                            </td>
+
+                            <td><button type="button" class="btn btn-success" onclick="location.href='@Url.Action("AddressAndPayment", "Checkout")'">Checkout</button></td>
+                        </tr>
+                        </tfoot>
+                </table>
+                </div>
+            </div></div>
 }

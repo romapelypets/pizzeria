@@ -48,5 +48,14 @@ namespace Pizzeria.WebUI.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpPost]
+        public ActionResult UpdatePrice(int id, decimal price)
+        {
+            var toupdate = context.Pizzas.Where(item => item.Id == 2).FirstOrDefault();
+            toupdate.Price = price;
+            context.SaveChanges();
+            return Json(toupdate, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -10,6 +10,7 @@ using Pizzeria.WebUI.ViewModels;
 using Pizzeria.WebUI.Services;
 using Pizzeria.WebUI.Services.ServiceImpl;
 using Pizzeria.WebUI.Services.Impl;
+using Pizzeria.WebUI.Services.Decorator;
 
 namespace Pizzeria.WebUI.Controllers
 {
@@ -49,13 +50,19 @@ namespace Pizzeria.WebUI.Controllers
 
         public ActionResult AddCustomToppping(int productId)
         {
-            Pizza pizza = context.Pizzas.Where(item => item.Id == 2).FirstOrDefault();
-
+            Pizza pizza1 = context.Pizzas.Where(item => item.Id == 2).FirstOrDefault();
+     
             Product product = context.Products.Where(item => item.Id == productId).FirstOrDefault();
-            pizza.Price += product.Price ;
 
-            TempData["Price"] = pizza.Price;
-            
+            pizza1.Price += product.Price ;
+
+
+            AbstractPizza abstractPizza = new ClassicPizza();
+            abstractPizza = new ProductPizza(abstractPizza);
+            decimal total = abstractPizza.GetCost() + product.Price;
+
+            TempData["Price"] = pizza1.Price;
+
             context.SaveChanges();
             return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
         }
@@ -65,6 +72,7 @@ namespace Pizzeria.WebUI.Controllers
         {
             return Json(facade.removePizzaFromCart(context, this.HttpContext, Server, id));
         }
+        
 
         public ActionResult CartSummary()
         {
