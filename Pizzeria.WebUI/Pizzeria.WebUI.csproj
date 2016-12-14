@@ -206,6 +206,10 @@
     <Compile Include="Services\Impl\PaymentService.cs" />
     <Compile Include="Services\IOrderProcessingService.cs" />
     <Compile Include="Services\IPaymentService.cs" />
+    <Compile Include="Services\Iterator\Collection.cs" />
+    <Compile Include="Services\Iterator\IAbstractCollection.cs" />
+    <Compile Include="Services\Iterator\IAbstractIterator.cs" />
+    <Compile Include="Services\Iterator\Iterator.cs" />
     <Compile Include="ViewModels\ShoppingCartRemoveViewModel.cs" />
     <Compile Include="ViewModels\ShoppingCartViewModel.cs" />
   </ItemGroup>
@@ -266,6 +270,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_LayoutAccount.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Account\Popular.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

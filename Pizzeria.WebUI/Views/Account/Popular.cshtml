@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "SomeAction";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+
+<div class="container">
+    <div class="row col-md-10 col-md-offset-1 custyle">
+        <table class="table table-striped custab">
+            <thead>
+                <tr>
+                    <th>
+                       Pizza
+                    </th>
+                    <th>
+                       Count
+                    </th>
+                   
+                </tr>
+            </thead>
+            @foreach (var item in ViewBag.Popular)
+            {
+                <tr>
+                     <td>
+                         @item.Key
+                         
+                    </td>
+                    <td>
+                        @item.Value
+                    </td>
+                </tr>
+               
+            
+            }
+            </table>
+</div>
+</div>

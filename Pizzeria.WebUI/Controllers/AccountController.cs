@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Pizzeria.DAL.Models;
 using Pizzeria.DAL.Data;
 using Pizzeria.WebUI.Helpers;
+using Pizzeria.WebUI.Services.Iterator;
 
 namespace Pizzeria.WebUI.Controllers
 {
@@ -63,6 +64,26 @@ namespace Pizzeria.WebUI.Controllers
         {
             authenticator.SignOut();
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Popular()
+        {
+            var h = new Dictionary<string, int>();
+            
+            Collection collection = new Collection();
+
+            Iterator iterator = collection.CreateIterator();
+            for (var item = iterator.First(); !iterator.isDone; item = iterator.Next())
+            {
+                int res;
+                if (h.TryGetValue(item.Pizza.Name, out res))
+                    h[item.Pizza.Name] += 1 * item.Count;
+                else
+                    h.Add(item.Pizza.Name, 1*item.Count);            
+            }
+
+            ViewBag.Popular = h;
+            return View();
         }
     }
 }
